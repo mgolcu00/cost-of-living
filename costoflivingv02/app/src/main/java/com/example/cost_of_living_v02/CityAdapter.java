@@ -9,23 +9,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import java.util.ArrayList;
-import java.util.Currency;
 
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.VievHolder> {
     private Context context;
     ArrayList<String> mData;
     String[] Tags = new String[]{"Bread : ", "Milk :", "Salary : "};
     private String CurrencyAmb ="$";
+    private double CurrencyValue;
 
     LayoutInflater inflater;
 
-    public CityAdapter(Context context,ArrayList<String> dataList){
+    public CityAdapter(Context context,ArrayList<String> dataList,double CV){
         this.context=context;
         this.mData=dataList;
         this.inflater=LayoutInflater.from(context);
-
+        this.CurrencyValue = CV;
     }
 
     @NonNull
