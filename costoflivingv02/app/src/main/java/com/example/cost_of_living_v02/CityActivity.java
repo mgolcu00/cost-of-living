@@ -18,45 +18,52 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
-
+public class CityActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    //Database Object
+    //Database Objects
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference reference = database.getReference();
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private String UserID;
+    private String selected;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_city);
+
+        //Bundle data alma
+        Bundle extras = getIntent().getExtras();
+        selected = extras.getString("name");
         //Database Set
         mAuth = FirebaseAuth.getInstance();
+        UserID = "Countries";
         database = FirebaseDatabase.getInstance();
-        reference = FirebaseDatabase.getInstance().getReference().child("Cities");
+        reference = FirebaseDatabase.getInstance().getReference().child("Cities").child(selected).child("info");
         Start();
-        //Recycler View
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        //RecyclerView
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewCity);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
-
+        setTitle(selected);
 
     }
 
     public void ShowData(DataSnapshot dataSnapshot) {
-        ArrayList<CityData> CityList = new ArrayList<>();
-        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-            CityData data = new CityData();
-            data.setName((String) ds.child("Name").getValue());
-            data.setCountryName((String) ds.child("CountryName").getValue());
-            data.setId((String) ds.child("id").getValue());
-            Log.i("TAG", "CityName : " + data.getName());
-            Log.i("TAG", "CountryName : " + data.getCountryName());
-            Log.i("TAG", "ID : " + data.getId());
-            CityList.add(data);
-        }
-        MainAdapter adapter = new MainAdapter(this, CityList);
+        ArrayList<String> DataList = new ArrayList<>();
+        CityData data = new CityData();
+        data.setBread((Double) dataSnapshot.child("Bread").getValue());
+        data.setMilk((Double) dataSnapshot.child("Milk").getValue());
+        data.setSalary((Double) dataSnapshot.child("Salary").getValue());
+        Log.i("TAG", "CityName : " + selected);
+        Log.i("TAG", "Bread : " + data.getBread());
+        Log.i("TAG", "Milk : " + String.valueOf(data.getMilk()));
+        Log.i("TAG", "Salary : " + data.getSalary());
+        DataList.add(String.valueOf(data.getBread()));
+        DataList.add(String.valueOf(data.getMilk()));
+        DataList.add(String.valueOf(data.getSalary()));
+        CityAdapter adapter = new CityAdapter(this, DataList);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -75,10 +82,4 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
-
 }
-    /*CityData data = new CityData();
-        data.setCountryName((String) dataSnapshot.child("Istanbul").child("CountryName").getValue());
-                data.setName((String) dataSnapshot.child("Istanbul").child("name").getValue());
-                data.setId((String) dataSnapshot.child("Istanbul").child("id").getValue());*/

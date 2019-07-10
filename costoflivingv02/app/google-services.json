@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "110301302405",
+    "firebase_url": "https://cost-of-living-75a93.firebaseio.com",
+    "project_id": "cost-of-living-75a93",
+    "storage_bucket": "cost-of-living-75a93.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110301302405:android:0a8018b89041ad0f",
+        "android_client_info": {
+          "package_name": "com.example.cost_of_living_v02"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "110301302405-eibgcpjgrth61dn1jo5h420gr2b2li4d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cost_of_living_v02",
+            "certificate_hash": "a33e1d13d0d2d3f6a92d3d984269cf7b8dcc32ae"
+          }
+        },
+        {
+          "client_id": "110301302405-dslde469a8ijs22ab3ohqpc89bba9054.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrnHj9exVNyebMIGBgHUQyv5oa4bFXBeo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "110301302405-dslde469a8ijs22ab3ohqpc89bba9054.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
