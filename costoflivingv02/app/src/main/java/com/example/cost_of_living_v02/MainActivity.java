@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         setTitle("Cost Of Living");
-
     }
 
     public void ShowData(DataSnapshot dataSnapshot) {

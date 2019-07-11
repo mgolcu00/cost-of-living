@@ -15,16 +15,21 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.VievHolder> {
     private Context context;
     ArrayList<String> mData;
     String[] Tags = new String[]{"Bread : ", "Milk :", "Salary : "};
-    private String CurrencyAmb ="$";
-    private double CurrencyValue;
-
+    private String CurrencyType;
+    private String CurrencyAmb;
     LayoutInflater inflater;
 
-    public CityAdapter(Context context,ArrayList<String> dataList,double CV){
-        this.context=context;
-        this.mData=dataList;
-        this.inflater=LayoutInflater.from(context);
-        this.CurrencyValue = CV;
+    public CityAdapter(Context context, ArrayList<String> dataList, String CT) {
+        this.context = context;
+        this.mData = dataList;
+        this.inflater = LayoutInflater.from(context);
+        if (CT.equals("TRY")) {
+            CurrencyAmb = "₺";
+        } else if (CT.equals("EUR")) {
+            CurrencyAmb = "€";
+        } else {
+            CurrencyAmb = "$";
+        }
     }
 
     @NonNull
@@ -38,7 +43,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.VievHolder> {
     @Override
     public void onBindViewHolder(@NonNull VievHolder holder, int position) {
         String Value = mData.get(position);
-        holder.setData(Value,position);
+        holder.setData(Value, position);
     }
 
     @Override
@@ -48,15 +53,16 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.VievHolder> {
 
     public class VievHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView Name,Value1;
+        TextView Name, Value1;
 
         public VievHolder(@NonNull View itemView) {
             super(itemView);
-            Name=itemView.findViewById(R.id.nameItem);
+            Name = itemView.findViewById(R.id.nameItem);
 
         }
+
         public void setData(String Value, int position) {
-                this.Name.setText(Tags[position]+Value+CurrencyAmb);
+            this.Name.setText(Tags[position] + Value + CurrencyAmb);
         }
 
         @Override

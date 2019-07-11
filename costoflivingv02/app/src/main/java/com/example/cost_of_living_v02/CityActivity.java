@@ -1,5 +1,6 @@
 package com.example.cost_of_living_v02;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,7 +41,8 @@ public class CityActivity extends AppCompatActivity {
     private String selected;
     private ImageButton btnCurrency;
     public double CurrrencyValue;
-    private boolean press=false;
+    private boolean press = false;
+    ProgressDialog pDialog;
     //Rest api
     public final String Url = "https://api.ratesapi.io/api/latest?base=USD";
 
@@ -69,40 +71,34 @@ public class CityActivity extends AppCompatActivity {
         btnCurrency.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                press=true;
-
                 Start();
+                press=true;
             }
         });
 
 
     }
 
-
-
     public void ShowData(DataSnapshot dataSnapshot) {
         ArrayList<String> DataList = new ArrayList<>();
         CityData data = new CityData();
-        final String CurrencyType;
-        if(press==false){
-            CurrrencyValue=1;
+        String CurrencyType;
+        if (!press) {
+            CurrrencyValue = 1;
+            CurrencyType = "USD";
+        }else {
+            CurrencyType = (String) dataSnapshot.child("Currency").getValue();
         }
-        CurrencyType = (String) dataSnapshot.child("Currency").getValue();
-        data.setBread((Double) dataSnapshot.child("Bread").getValue()*CurrrencyValue);
-        data.setMilk((Double) dataSnapshot.child("Milk").getValue()*CurrrencyValue);
-        data.setSalary((Double) dataSnapshot.child("Salary").getValue()*CurrrencyValue);
-        Log.i("TAG", "CityName : " + selected);
-        Log.i("TAG", "Bread : " + data.getBread());
-        Log.i("TAG", "Milk : " + data.getMilk());
-        Log.i("TAG", "Salary : " + data.getSalary());
-        DataList.add(String.valueOf(new DecimalFormat("##.##").format(data.getBread())));
-        DataList.add(String.valueOf(new DecimalFormat("##.##").format(data.getMilk())));
-        DataList.add(String.valueOf(new DecimalFormat("##.##").format(data.getSalary())));
-        //Parse JSON
+
+        final String finalCurrencyType = CurrencyType;
         StringRequest request = new StringRequest(Request.Method.GET, Url, new Response.Listener<String>() {
             @Override
             public void onResponse(String string) {
-                okunanlariParseEt(string,CurrencyType);
+                try {
+                    okunanlariParseEt(string, finalCurrencyType);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -110,22 +106,32 @@ public class CityActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Veriler Okunurken Hata Oluştu", Toast.LENGTH_SHORT).show();
             }
         });
-
         AppController.getInstance().addToRequestQueue(request, "rates");
-        CityAdapter adapter = new CityAdapter(this, DataList,CurrrencyValue);
+
+
+        data.setBread((Double) dataSnapshot.child("Bread").getValue() * CurrrencyValue);
+        data.setMilk((Double) dataSnapshot.child("Milk").getValue() * CurrrencyValue);
+        data.setSalary((Double) dataSnapshot.child("Salary").getValue() * CurrrencyValue);
+        Log.i("TAG", "CityName : " + selected);
+        Log.i("TAG", "Bread : " + data.getBread());
+        Log.i("TAG", "Milk : " + data.getMilk());
+        Log.i("TAG", "Salary : " + data.getSalary());
+        DataList.add(String.valueOf(new DecimalFormat("##.##").format(data.getBread())));
+        DataList.add(String.valueOf(new DecimalFormat("##.##").format(data.getMilk())));
+        DataList.add(String.valueOf(new DecimalFormat("##.##").format(data.getSalary())));
+        CityAdapter adapter = new CityAdapter(this, DataList, CurrencyType);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
-    public void  okunanlariParseEt(String okunanJson,String CurrencyType) {
-        try {
-            JSONObject jsonObj = new JSONObject(okunanJson);
-            double temp = jsonObj.getJSONObject("rates").getDouble(CurrencyType);
-            Log.i("1 USD = "+CurrencyType+" : ", String.valueOf(temp));
-            CurrrencyValue=temp;
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+    public void okunanlariParseEt(String okunanJson, String CurrencyType) throws JSONException {
+
+        JSONObject jsonObj = new JSONObject(okunanJson);
+        double temp = jsonObj.getJSONObject("rates").getDouble(CurrencyType);
+        Log.i("1 USD = " + CurrencyType + " : ", String.valueOf(temp));
+        CurrrencyValue = temp;
     }
+
     public void Start() {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -140,6 +146,5 @@ public class CityActivity extends AppCompatActivity {
         });
 
     }
-
 
 }

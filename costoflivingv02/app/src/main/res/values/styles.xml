@@ -6,9 +6,9 @@
         <item name="colorPrimary">#ffcdd2</item>
         <item name="colorPrimaryDark">#cb9ca1</item>
         <item name="colorAccent">@color/colorAccent</item>
-
+        <item name="android:fontFamily">@font/didactgothic</item>
     </style>
-<!--    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:fontFamily"></item>
-    </style>-->
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:fontFamily">@font/didactgothic</item>
+    </style>
 </resources>
