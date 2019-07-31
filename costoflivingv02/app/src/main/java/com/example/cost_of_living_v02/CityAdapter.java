@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.VievHolder> {
     private Context context;
     ArrayList<String> mData;
-    String[] Tags = new String[]{"Bread : ", "Milk :", "Salary : "};
+    String[] Tags = new String[]{"Bread : ", "Milk :", "Salary : ","Population : "};
     private String CurrencyType;
     private String CurrencyAmb;
     LayoutInflater inflater;
@@ -62,7 +62,12 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.VievHolder> {
         }
 
         public void setData(String Value, int position) {
-            this.Name.setText(Tags[position] + Value + CurrencyAmb);
+            if(Tags[position] == "Population : "){
+                this.Name.setText(Tags[position] + Value);
+            }else{
+                this.Name.setText(Tags[position] + Value + CurrencyAmb);
+            }
+
         }
 
         @Override

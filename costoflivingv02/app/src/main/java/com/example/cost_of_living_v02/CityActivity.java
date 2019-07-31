@@ -72,7 +72,7 @@ public class CityActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Start();
-                press=true;
+                press = true;
             }
         });
 
@@ -86,8 +86,9 @@ public class CityActivity extends AppCompatActivity {
         if (!press) {
             CurrrencyValue = 1;
             CurrencyType = "USD";
-        }else {
+        } else {
             CurrencyType = (String) dataSnapshot.child("Currency").getValue();
+            Start();
         }
 
         final String finalCurrencyType = CurrencyType;
@@ -112,6 +113,7 @@ public class CityActivity extends AppCompatActivity {
         data.setBread((Double) dataSnapshot.child("Bread").getValue() * CurrrencyValue);
         data.setMilk((Double) dataSnapshot.child("Milk").getValue() * CurrrencyValue);
         data.setSalary((Double) dataSnapshot.child("Salary").getValue() * CurrrencyValue);
+        data.setPopulation((Long) dataSnapshot.child("Population").getValue());
         Log.i("TAG", "CityName : " + selected);
         Log.i("TAG", "Bread : " + data.getBread());
         Log.i("TAG", "Milk : " + data.getMilk());
@@ -119,6 +121,7 @@ public class CityActivity extends AppCompatActivity {
         DataList.add(String.valueOf(new DecimalFormat("##.##").format(data.getBread())));
         DataList.add(String.valueOf(new DecimalFormat("##.##").format(data.getMilk())));
         DataList.add(String.valueOf(new DecimalFormat("##.##").format(data.getSalary())));
+        DataList.add(String.valueOf(data.getPopulation()));
         CityAdapter adapter = new CityAdapter(this, DataList, CurrencyType);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();

@@ -3,9 +3,9 @@ package com.example.cost_of_living_v02.model;
 public class CityData {
     private String id, name, CountryName,currency;
     private Double salary,milk, bread;
-    private float  gasoline, oneWayTicket,   rice, apple, beef, Utilites, internetCost;
-    private int population, starbucksCount, LibraryCount;
-
+    private Double gasoline, oneWayTicket,   rice, apple, beef, Utilites, internetCost;
+    private int  starbucksCount, LibraryCount;
+    private Long population;
     public CityData() {
     }
 
@@ -57,13 +57,12 @@ public class CityData {
         this.milk = milk;
     }
 
-    public String getCurrency() {
-        return currency;
+    public Long getPopulation() {
+        return population;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setPopulation(Long population) {
+        this.population = population;
     }
-
 }
 

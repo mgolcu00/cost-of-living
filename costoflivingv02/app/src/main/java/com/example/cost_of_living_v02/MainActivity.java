@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             data.setId((String) ds.child("id").getValue());
             Log.i("TAG", "CityName : " + data.getName());
             Log.i("TAG", "CountryName : " + data.getCountryName());
+
             Log.i("TAG", "ID : " + data.getId());
             CityList.add(data);
         }
@@ -74,10 +75,4 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
-
 }
-    /*CityData data = new CityData();
-        data.setCountryName((String) dataSnapshot.child("Istanbul").child("CountryName").getValue());
-                data.setName((String) dataSnapshot.child("Istanbul").child("name").getValue());
-                data.setId((String) dataSnapshot.child("Istanbul").child("id").getValue());*/
